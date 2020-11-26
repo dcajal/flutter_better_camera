@@ -161,6 +161,16 @@ final class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
           }
           break;
         }
+      case "disableAutoExposure":
+      {
+        try {
+          camera.disableAutoExposure();
+          result.success(null);
+        } catch (Exception e) {
+          handleException(e, result);
+        }
+        break;
+      }
       case "setFlashMode": {
         try {
           Log.d("TAG",call.argument("flashMode").toString());

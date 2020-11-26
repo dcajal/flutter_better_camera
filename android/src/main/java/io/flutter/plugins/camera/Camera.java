@@ -796,7 +796,7 @@ public class Camera {
     if (mAutoFocus == autoFocus) {
       return;
     }
-    Log.d( "AUTO FOCUD", "setAutoFocus");
+    Log.d( "AUTO FOCUS", "setAutoFocus");
 
     mAutoFocus = autoFocus;
     if (mPreviewRequestBuilder != null) {
@@ -810,6 +810,19 @@ public class Camera {
           mAutoFocus = !mAutoFocus; // Revert
         }
       }
+    }
+  }
+
+  void disableAutoExposure() {
+    Log.d( "AUTO EXPOSURE", "disableAutoExposure");
+    try {
+      //mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_OFF);
+      mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_LOCK, true);
+      mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, 0);
+      mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(), mCaptureCallback, null);
+
+    } catch (CameraAccessException e) {
+      Log.e(TAG, "Failed to disable exposure.", e);
     }
   }
 
